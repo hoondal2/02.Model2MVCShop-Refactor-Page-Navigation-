@@ -50,6 +50,7 @@ public class ListProductAction extends Action{
 
 			// Model °ú View ¿¬°á
 			request.setAttribute("list", map.get("list"));
+			request.setAttribute("tranNoList", map.get("tranNoList"));
 			request.setAttribute("resultPage", resultPage);
 			request.setAttribute("search", search);
 			

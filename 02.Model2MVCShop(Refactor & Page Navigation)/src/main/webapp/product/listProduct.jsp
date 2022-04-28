@@ -146,6 +146,9 @@ function fncGetProductList(currentPage){
 	<%
 		for(int i=0; i<list.size(); i++) {
 			Product vo = list.get(i);
+			////////////////////////////////
+			tranNo = tranNoList.get(i);
+			System.out.println("tranNoList에서 가져온 tranNo의 값 : " +tranNo);
 	%>
 	<tr class="ct_list_pop">
 		<td align="center"><%=i + 1%></td>

@@ -109,14 +109,14 @@ public class PurchaseDAO {
 			HashMap<String,Object> map = new HashMap<String,Object>();
 			map.put("count", new Integer(total));
 	
-			rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
-			System.out.println("searchVO.getPage():" + searchVO.getPage());
-			System.out.println("searchVO.getPageUnit():" + searchVO.getPageUnit());
+			rs.absolute(searchVO.getCurrentPage() * searchVO.getPageSize() - searchVO.getPageSize()+1);
+			System.out.println("searchVO.getPage():" + searchVO.getCurrentPage());
+			System.out.println("searchVO.getPageUnit():" + searchVO.getPageSize());
 	
 			ArrayList<Purchase> list = new ArrayList<Purchase>();
 			
 			if (total > 0) {
-				for (int i = 0; i < searchVO.getPageUnit(); i++) {
+				for (int i = 0; i < searchVO.getPageSize(); i++) {
 					
 					Product productVO = new Product();
 					

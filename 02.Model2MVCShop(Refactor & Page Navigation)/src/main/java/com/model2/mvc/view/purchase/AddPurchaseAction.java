@@ -8,13 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.model2.mvc.framework.Action;
+import com.model2.mvc.service.domain.*;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
-import com.model2.mvc.service.product.vo.ProductVO;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
-import com.model2.mvc.service.purchase.vo.PurchaseVO;
-import com.model2.mvc.service.user.vo.UserVO;
 
 public class AddPurchaseAction extends Action {
 	
@@ -25,14 +23,14 @@ public class AddPurchaseAction extends Action {
 	
 	// 세션에서 user 객체 가져오기
 	HttpSession session = request.getSession();
-	UserVO user = (UserVO)session.getAttribute("user");
+	User user = (User)session.getAttribute("user");
 	
 	// param으로 product객체 가져오기
 	ProductService pdService=new ProductServiceImpl();
-	ProductVO productVO =pdService.getProduct(Integer.parseInt(request.getParameter("prodNo")));
+	Product productVO =pdService.getProduct(Integer.parseInt(request.getParameter("prodNo")));
 	
 	// PurchaseVO에 세팅하기
-	PurchaseVO purchaseVO = new PurchaseVO();
+	Purchase purchaseVO = new Purchase();
 	purchaseVO.setPaymentOption(request.getParameter("paymentOption"));
 	purchaseVO.setReceiverName(request.getParameter("receiverName"));
 	purchaseVO.setReceiverPhone(request.getParameter("receiverPhone"));

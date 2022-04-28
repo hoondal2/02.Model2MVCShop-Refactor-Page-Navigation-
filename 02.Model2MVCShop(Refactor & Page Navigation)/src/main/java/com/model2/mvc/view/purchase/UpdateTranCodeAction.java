@@ -4,12 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.model2.mvc.framework.Action;
-import com.model2.mvc.service.product.ProductService;
-import com.model2.mvc.service.product.impl.ProductServiceImpl;
-import com.model2.mvc.service.product.vo.ProductVO;
+import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
-import com.model2.mvc.service.purchase.vo.PurchaseVO;
 
 public class UpdateTranCodeAction extends Action {
 	
@@ -22,7 +19,7 @@ public class UpdateTranCodeAction extends Action {
 	// tranCode가 null이 아니고 aaa라면? -> bbb로 세팅후 dao통해 vo에 세팅
 		// dao 세팅 안해쥼 ...........
 		PurchaseService pcService=new PurchaseServiceImpl();
-		PurchaseVO purchaseVO =  pcService.getPurchase(Integer.parseInt(request.getParameter("tranNo")));
+		Purchase purchaseVO =  pcService.getPurchase(Integer.parseInt(request.getParameter("tranNo")));
 		System.out.println("purchaseVO 정보 : " +purchaseVO);
 		
 		if(purchaseVO.getTranCode()!=null) { // 널 에러
