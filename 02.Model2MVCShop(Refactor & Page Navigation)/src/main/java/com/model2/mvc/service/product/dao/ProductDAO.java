@@ -97,13 +97,14 @@ public class ProductDAO {
 		Connection con = DBUtil.getConnection();
 
 		// Original Query ±¸¼º
-		String sql = "SELECT * FROM product p, transaction t WHERE p.prod_no = t.prod_no(+) ";
+		String sql = "SELECT p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day, p.price, p.image_file, p.reg_date, t.tran_status_code, t.tran_no"
+					+ " FROM product p, transaction t WHERE p.prod_no = t.prod_no(+) ";
 		
 		if (search.getSearchCondition() != null) {
 			if (search.getSearchCondition().equals("0") && !search.getSearchKeyword().equals("")) {
-				sql += " where p.PROD_NO=" + search.getSearchKeyword();
+				sql += " and p.PROD_NO=" + search.getSearchKeyword();
 			} else if (search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {
-				sql += " where lower(p.prod_name) LIKE lower('%" + search.getSearchKeyword() + "%')";
+				sql += " and lower(p.prod_name) LIKE lower('%" + search.getSearchKeyword() + "%')";
 			}
 		}
 		

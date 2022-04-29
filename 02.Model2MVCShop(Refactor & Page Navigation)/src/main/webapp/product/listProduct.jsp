@@ -138,33 +138,55 @@ function fncGetProductList(currentPage){
 		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">등록일</td>	
+		<td class="ct_line02"></td>
+		<td class="ct_list_b">현재상태</td>	
 				
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 	<%
+		int tranNo = 0;
 		for(int i=0; i<list.size(); i++) {
 			Product vo = list.get(i);
 			////////////////////////////////
-			tranNo = tranNoList.get(i);
-			System.out.println("tranNoList에서 가져온 tranNo의 값 : " +tranNo);
+			//tranNo = tranNoList.get(i);
+			//System.out.println("tranNoList에서 가져온 tranNo의 값 : " +tranNo);
 	%>
 	<tr class="ct_list_pop">
 		<td align="center"><%=i + 1%></td>
 		<td></td>
 		<td align="left">
-			<% if(menu.equals("search")){%>
-			<a href="/getProduct.do?menu=search&prodNo=<%=vo.getProdNo() %>"><%= vo.getProdName() %></a>
+			<% if(menu.equals("search") && vo.getProTranCode().equals("판매중")){%>
+				<a href="/getProduct.do?menu=search&prodNo=<%=vo.getProdNo() %>"><%= vo.getProdName() %> </a>
+			<%} else if(menu.equals("search") && !vo.getProTranCode().equals("판매중")){%>
+				<%= vo.getProdName() %>	
 			<%} else if(menu.equals("manage")){%>
-			<a href="/updateProductView.do?menu=manage&prodNo=<%=vo.getProdNo() %>"><%= vo.getProdName() %></a>
+				<%= vo.getProdName() %> <a href="/updateProductView.do?menu=manage&prodNo=<%=vo.getProdNo() %>"> 수정</a>
 			<%}%>
 		</td>
 		<td></td>
 		<td align="left"><%= vo.getPrice() %></td>
 		<td></td>
 		<td align="left"><%= vo.getRegDate() %>
-		</td>		
+		<td></td>
+		<td align="left">
+		 <%if(menu.equals("search") && !vo.getProTranCode().equals("판매중")) {%>
+		 	재고없음
+		 <%} %>
+		 
+		 <%if(menu.equals("search") && vo.getProTranCode().equals("판매중")) {%>
+		 	<%=vo.getProTranCode() %>
+		 <%} %>
+		 
+		 <%if(menu.equals("manage")) {%>
+			 <%=vo.getProTranCode() %>
+		 <% if(vo.getProTranCode().equals("구매완료") ){%>
+		 	<!-- 배송하기 클릭 시 , 해당하는 상품의 tranCode가 변경되어야 한다. (판매중인 상품의 tranNo은 0)  -->
+		 	<a href="/updateTranCode.do?tranNo=<%= tranNo%>">  배송하기</a>
+		 <%}}%>
+		
+		</td>				
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>

@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=euc-kr"%>
 
@@ -5,8 +6,12 @@
 <%@ page import="java.util.*"%>
 
 <%
-	User user = (User)request.getAttribute("user");
-	System.out.println("사용자는 누구? " +user.getRole());
+	session = request.getSession();
+	User user = (User)session.getAttribute("user");
+	
+	if(user!=null){
+		System.out.println("사용자는 누구? " +user.getRole());
+	}
 
 	Product vo = (Product)request.getAttribute("vo");
 %>
@@ -26,14 +31,14 @@
 	}
 --%>
 
-<%--
+<%
 	// 고친 부분
 	String prvHistory = "";
 	   
 	   for (Cookie c:request.getCookies()){
 	      if (c.getName().equals("history")){
-	         prvHistory=c.getValue();
-	         System.out.println("getProduct: "+ prvHistory);         
+	         prvHistory=URLDecoder.decode(c.getValue(), "utf-8");
+	         System.out.println("getProduct: " + prvHistory);         
 	      }
 	   }
 	   // Cookie는 Request, Response를 가지고 불러오기 또는 전달이 이루어진다.
@@ -41,15 +46,14 @@
 	   int prodNo= vo.getProdNo();
 	   System.out.println("getProduct: "+ prvHistory);
 	   System.out.println("getProduct: "+ prodNo+","+prvHistory);
-	   Cookie cookie = new Cookie("history", prodNo+","+prvHistory);   // 쿠키 생성
-	   cookie.setMaxAge(60*60);   // 헌재 Cookie의 유지기간
+	   Cookie cookie = new Cookie("history", URLEncoder.encode(prodNo+","+prvHistory, "utf-8"));   // 쿠키 생성
+	   cookie.setMaxAge(60*60);   // 현재 Cookie의 유지기간
 	   response.addCookie(cookie);
-	 --%>
-
-<% String menu = request.getParameter("menu");
-	System.out.println(menu);
 %>
-
+ 
+<% String menu = request.getParameter("menu");
+	System.out.println("getProduct에서 받은 menu : " +menu);
+%>
 
 <html>
 <head>
@@ -186,7 +190,7 @@
 							width="17" height="23" /></td>
 						<td background="/images/ct_btnbg02.gif" class="ct_btn01"
 							style="padding-top: 3px;"><a
-							href="/updateUserView.do?prodNo=<%=vo.getProdNo()%>">수정</a></td>
+							href="/updateProductView.do?prodNo=<%=vo.getProdNo()%>">수정</a></td>
 						<td width="14" height="23"><img src="/images/ct_btnbg03.gif"
 							width="14" height="23"></td>
 						<%} %>
